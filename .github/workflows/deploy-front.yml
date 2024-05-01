@@ -1,0 +1,50 @@
+name: Deploy app React
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build App
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20'
+
+      - name: Set env vars
+        env:
+          API_URL: ${{ vars.API_URL }}
+        run: |
+          echo "API_URL=$API_URL" >> .env
+
+      - name: Install Dependencies
+        run: npm install
+        
+      - name: Build
+        run: npm run build
+
+      - name: Packing app
+        run: tar -czvf educai.tar.gz build/
+
+  deploy:
+    name: Deploy app
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy
+        run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 400 ~/.ssh/id_rsa
+        echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        scp educai.tar.gz infra@${{ secrets.SERVER_ADDR }}:/home/infra/
+        ssh infra@${{ secrets.SERVER_ADDR }} "rm -rf /var/www/educai/build && cd /home/infra/ && tar -xzvf educai.tar.gz -C /var/www/educai/
