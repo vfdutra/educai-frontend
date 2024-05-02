@@ -42,9 +42,9 @@ jobs:
     steps:
       - name: Deploy
         run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 400 ~/.ssh/id_rsa
-        echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        scp educai.tar.gz infra@${{ vars.SERVER_ADDRES }}:/home/infra/
-        ssh infra@${{ vars.SERVER_ADDRES }} "rm -rf /var/www/educai/build && cd /home/infra/ && tar -xzvf educai.tar.gz -C /var/www/educai/"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+          echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+          scp educai.tar.gz infra@${{ vars.SERVER_ADDRES }}:/home/infra/
+          ssh infra@${{ vars.SERVER_ADDRES }} "rm -rf /var/www/educai/build && cd /home/infra/ && tar -xzvf educai.tar.gz -C /var/www/educai/"
