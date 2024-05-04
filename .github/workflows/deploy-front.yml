@@ -31,11 +31,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Packing app
-        run: |
-          tar -czvf educai.tar.gz build/
-          scp educai.tar.gz infra@${{ vars.SERVER_ADDRESS }}:/home/infra/
-
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
@@ -47,5 +42,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
+          tar -czvf educai.tar.gz build/
           echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+          scp educai.tar.gz infra@${{ vars.SERVER_ADDRESS }}:/home/infra/
           ssh infra@${{ vars.SERVER_ADDRESS }} "rm -rf /var/www/educai/build && tar -xzvf /home/infra/educai.tar.gz -C /var/www/educai/"
