@@ -35,13 +35,7 @@ jobs:
         run: |
           tar -czvf educai.tar.gz build/
           ls -lha
-
-  deploy:
-    name: Deploy app
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
+      
       - name: Deploy
         run: |
           mkdir -p ~/.ssh
@@ -50,3 +44,11 @@ jobs:
           echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
           scp educai.tar.gz infra@${{ vars.SERVER_ADDRESS }}:/home/infra/
           ssh infra@${{ vars.SERVER_ADDRESS }} "rm -rf /var/www/educai/build && tar -xzvf /home/infra/educai.tar.gz -C /var/www/educai/"
+
+
+  # deploy:
+  #   name: Deploy app
+  #   runs-on: ubuntu-latest
+  #   needs: build
+
+  #   steps:
