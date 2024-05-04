@@ -29,9 +29,12 @@ jobs:
         run: npm install
         
       - name: Build
+        run: npm run build
+
+      - name: Pack
         run: |
-          npm run build
           tar -czvf educai.tar.gz build/
+          ls -lha
 
   deploy:
     name: Deploy app
