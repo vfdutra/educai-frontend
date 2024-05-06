@@ -1,0 +1,16 @@
+import * as React from 'react';
+import { AppBar, Toolbar, Typography } from '@mui/material';
+
+function HeaderPage() {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          educAI
+        </Typography>
+      </Toolbar>
+    </AppBar>
+  );
+}
+
+export default HeaderPage;
