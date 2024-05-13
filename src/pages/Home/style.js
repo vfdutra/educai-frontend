@@ -1,4 +1,16 @@
 import styled from 'styled-components';
+import { Grid } from '@mui/material';
+
+export const StyledGridItem = styled(Grid).attrs({
+  item: true,
+})`
+  width: 100%;
+  background-color: #F8F6E3;
+  border: 1px solid #6AD4DD;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 8px 0;
+`;
 
 export const Container = styled.div`
     display: grid;
