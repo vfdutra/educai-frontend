@@ -12,5 +12,7 @@ export const AppContainer = styled.div`
   text-align: center;
   width: 100%;
   box-sizing: border-box;
+  height: 100vh;
+  overflow: auto;
 `;
 
