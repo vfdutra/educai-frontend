@@ -32,3 +32,11 @@ export const Card = styled.div`
     background-color: red;
 `;
 
+export const AccordionContainer = styled.div`
+  width: 90%;
+  margin: 40px auto;
+  border: 2px solid #ccc; /* Increased border width for better distinction */
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  gap: 20px; /* Increased gap between items */
+`;

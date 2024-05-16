@@ -16,3 +16,13 @@ export const AppContainer = styled.div`
   overflow: auto;
 `;
 
+export const Header = styled.header`
+  background-color: #fff;
+  min-height: 60px; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: purple;
+`;

@@ -1,27 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { 
-  Container, 
-  Grid, 
-  Card, 
-  Typography, 
-  TextField, 
-  Button, 
-  List, 
-  ListItem, 
-  ListItemText, 
-  // eslint-disable-next-line no-unused-vars
-  CircularProgress 
-} from '@mui/material';
+import { Container, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
+import AccordionItem from '../../components/AccordionItem';
+import SnackbarAlert from '../../components/SnackbarAlert/SnackbarAlert';
+import LessonPlanDisplay from '../../components/LessonPlanDisplay/LessonPlanDisplay';
+
+import QuizForm from '../../components/QuizForm';
+import SlideGeneratorForm from '../../components/SlideGeneratorForm';
+import AudioGeneratorForm from '../../components/AudioGeneratorForm';
+import LessonPlanForm from '../../components/LessonPlanForm';
+
 import AudiotrackIcon from '@mui/icons-material/Audiotrack';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import QuizIcon from '@mui/icons-material/Quiz';
 import LessonPLanIcon from '@mui/icons-material/BorderColorTwoTone';
 
-import AccordionItem from '../../components/AccordionItem/AccordionItem';
-import SnackbarAlert from '../../components/SnackbarAlert/SnackbarAlert';
-import LessonPlanDisplay from '../../components/LessonPlanDisplay/LessonPlanDisplay';
-
-import { StyledGridItem } from './style';
+import { AccordionContainer } from './style';
 
 export default function Home() {
   useEffect(() => {
@@ -178,136 +171,116 @@ export default function Home() {
 
   return (
     <Container>
-      <Grid
-        container
-        spacing={2}
-        direction="column"
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: "100vh" }}
-      >
-        <StyledGridItem xs={12}>
-          <Card>
-            <AccordionItem
-              expanded={audioExpanded}
-              onChange={() => setAudioExpanded(!audioExpanded)}
-              icon={<AudiotrackIcon />}
-              title="Gerador de Áudio"
-              prompt={audioPrompt}
-              onPromptChange={(e) => setAudioPrompt(e.target.value)}
-              onSubmit={handleAudioSubmit}
-              showPrompt={true}
-              loading={audioLoading}
-              file={audioFile}
-              downloadLabel="Baixar Áudio"
-            />
-          </Card>
-        </StyledGridItem>
-        <StyledGridItem xs={12}>
-          <Card>
-            <AccordionItem
-              expanded={slideExpanded}
-              onChange={() => setSlideExpanded(!slideExpanded)}
-              icon={<SlideshowIcon />}
-              title="Gerador de Slide"
-              prompt={slidePrompt}
-              onPromptChange={(e) => setSlidePrompt(e.target.value)}
-              onSubmit={handleSlideSubmit}
-              showPrompt={true}
-              loading={slideLoading}
-              file={slideFile}
-              downloadLabel="Baixar Slide"
-            />
-          </Card>
-        </StyledGridItem>
-        <StyledGridItem xs={12}>
-          <Card>
-            <AccordionItem
-              expanded={quizExpanded}
-              onChange={() => setQuizExpanded(!quizExpanded)}
-              icon={<QuizIcon />}
-              title="Gerador de Quiz"
-              prompt={quizPrompt}
-              onPromptChange={(e) => setQuizPrompt(e.target.value)}
-              onSubmit={handleQuizSubmit}
-              showPrompt={false}
-              loading={quizLoading}
-            >
-              <Grid container spacing={2} style={{ padding: '16px' }}>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Tema"
-                    value={quizPrompt}
-                    onChange={(e) => setQuizPrompt(e.target.value)}
-                    fullWidth
-                    margin="normal"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Número de Questões"
-                    type="number"
-                    value={numberOfQuestions}
-                    onChange={(e) => setNumberOfQuestions(parseInt(e.target.value))}
-                    fullWidth
-                    margin="normal"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Número de Opções por Questão"
-                    type="number"
-                    value={numberOfOptions}
-                    onChange={(e) => setNumberOfOptions(parseInt(e.target.value))}
-                    fullWidth
-                    margin="normal"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Button variant="contained" color="primary" onClick={handleQuizSubmit} >
-                    Gerar Quiz
-                  </Button>
-                </Grid>
-              </Grid>
-            </AccordionItem>
-            {quiz && !quizLoading && (
-              <div style={{ padding: '16px' }}>
-                <Typography variant="h6">Quiz</Typography>
-                <List>
-                  {quiz.map((q, index) => (
-                    <div key={index}>
-                      <Typography variant="subtitle1">{q.question}</Typography>
-                      <List>
-                        {q.options.map((option, i) => (
-                          <ListItem key={i}>
-                            <ListItemText primary={option} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </div>
-                  ))}
-                </List>
-              </div>
-            )}
-          </Card>
-        </StyledGridItem>
-        <StyledGridItem xs={12}>
-          <Card>
-            <AccordionItem
-              expanded={lessonPlanExpanded}
-              onChange={() => setLessonPlanExpanded(!lessonPlanExpanded)}
-              icon={<LessonPLanIcon />}
-              title="Gerador de Plano de Aula"
-              prompt={lessonPlanPrompt}
-              onPromptChange={(e) => setLessonPlanPrompt(e.target.value)}
-              onSubmit={handleLessonPlanSubmit}
-              showPrompt={true}
-              loading={lessonPlanLoading}
-            />
-            {lessonPlan && <LessonPlanDisplay lessonPlan={lessonPlan} />}
-          </Card>
-        </StyledGridItem>
-      </Grid>
+      <AccordionContainer>
+        <AccordionItem
+          icon={<QuizIcon />}
+          title="Quiz Generator"
+          index={0}
+          isActive={quizExpanded}
+          onClick={() => setQuizExpanded(!quizExpanded)}
+        >
+          <QuizForm
+            quizPrompt={quizPrompt}
+            numberOfQuestions={numberOfQuestions}
+            numberOfOptions={numberOfOptions}
+            onQuizPromptChange={setQuizPrompt}
+            onNumberOfQuestionsChange={setNumberOfQuestions}
+            onNumberOfOptionsChange={setNumberOfOptions}
+            onSubmit={handleQuizSubmit}
+            loading={quizLoading}
+            file={quiz ? URL.createObjectURL(new Blob([JSON.stringify(quiz)], { type: 'application/json' })) : null}
+          />
+          {quiz && !quizLoading && (
+            <div style={{ padding: '16px' }}>
+              <Typography variant="h6">Quiz</Typography>
+              <List>
+                {quiz.map((q, index) => (
+                  <div key={index}>
+                    <Typography variant="subtitle1">{q.question}</Typography>
+                    <List>
+                      {q.options.map((option, i) => (
+                        <ListItem key={i}>
+                          <ListItemText primary={option} />
+                        </ListItem>
+                      ))}
+                    </List>
+                  </div>
+                ))}
+              </List>
+            </div>
+          )}
+        </AccordionItem>
+
+        <AccordionItem
+          icon={<SlideshowIcon />}
+          title="Slide Generator"
+          index={1}
+          isActive={slideExpanded}
+          onClick={() => setSlideExpanded(!slideExpanded)}
+        >
+          <SlideGeneratorForm
+            slidePrompt={slidePrompt}
+            onSlidePromptChange={setSlidePrompt}
+            onSubmit={handleSlideSubmit}
+            loading={slideLoading}
+            file={slideFile}
+          />
+          {slideFile && !slideLoading && (
+            <div style={{ padding: '16px' }}>
+              <Typography variant="h6">Slide</Typography>
+              <Button variant="contained" color="secondary" href={slideFile} download>
+                Baixar Slide
+              </Button>
+            </div>
+          )}
+        </AccordionItem>
+
+        <AccordionItem
+          icon={<AudiotrackIcon />}
+          title="Audio Generator"
+          index={2}
+          isActive={audioExpanded}
+          onClick={() => setAudioExpanded(!audioExpanded)}
+        >
+          <AudioGeneratorForm
+            audioPrompt={audioPrompt}
+            onAudioPromptChange={setAudioPrompt}
+            onSubmit={handleAudioSubmit}
+            loading={audioLoading}
+            file={audioFile}
+          />
+          {audioFile && !audioLoading && (
+            <div style={{ padding: '16px' }}>
+              <Typography variant="h6">Áudio</Typography>
+              <Button variant="contained" color="secondary" href={audioFile} download>
+                Baixar Áudio
+              </Button>
+            </div>
+          )}
+        </AccordionItem>
+
+        <AccordionItem
+          icon={<LessonPLanIcon />}
+          title="Class Script Generator"
+          index={3}
+          isActive={lessonPlanExpanded}
+          onClick={() => setLessonPlanExpanded(!lessonPlanExpanded)}
+        >
+          <LessonPlanForm
+            lessonPlanPrompt={lessonPlanPrompt}
+            onLessonPlanPromptChange={setLessonPlanPrompt}
+            onSubmit={handleLessonPlanSubmit}
+            loading={lessonPlanLoading}
+            file={lessonPlan ? URL.createObjectURL(new Blob([JSON.stringify(lessonPlan)], { type: 'application/json' })) : null}
+          />
+          {lessonPlan && !lessonPlanLoading && (
+            <div style={{ padding: '16px' }}>
+              <Typography variant="h6">Plano de Aula</Typography>
+              <LessonPlanDisplay lessonPlan={lessonPlan} />
+            </div>
+          )}
+        </AccordionItem>
+      </AccordionContainer>
 
       <SnackbarAlert
         open={snackPack.success.open}
