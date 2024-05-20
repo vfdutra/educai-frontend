@@ -20,10 +20,8 @@ jobs:
           node-version: '20'
 
       - name: Set env vars
-        env:
-          API_URL: ${{ vars.API_URL }}
         run: |
-          echo "API_URL=$API_URL" >> .env
+          echo "${{ secrets.ENV }}" > .env
 
       - name: Install Dependencies
         run: npm install
