@@ -13,30 +13,33 @@ export const StyledGridItem = styled(Grid).attrs({
 `;
 
 export const Container = styled.div`
-    display: grid;
-    justify-content: center;
-    align-items: center;
-   grid-template-rows: 1fr 1fr 1fr;
-   height: 100vh;
-   gap: 1rem;
-   background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: 1fr 1fr 1fr;
+  height: 100vh;
+  gap: 1rem;
+  background-color: white;
+  min-height: 100vh;
+  padding: 0 20px;
 `;
 
 export const Card = styled.div`
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    width: 100%;
-    background-color: red;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  background-color: red;
 `;
 
 export const AccordionContainer = styled.div`
-  width: 90%;
+  width: 100%; 
+  max-width: 2000px;
   margin: 40px auto;
-  border: 2px solid #ccc; /* Increased border width for better distinction */
+  border: 2px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  gap: 20px; /* Increased gap between items */
+  gap: 20px;
 `;

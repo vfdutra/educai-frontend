@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
+import { Container, Typography, List, ListItem, ListItemText, Button, Grid } from '@mui/material';
 import AccordionItem from '../../components/AccordionItem';
 import SnackbarAlert from '../../components/SnackbarAlert/SnackbarAlert';
 import LessonPlanDisplay from '../../components/LessonPlanDisplay/LessonPlanDisplay';
@@ -44,6 +44,8 @@ export default function Home() {
   const [lessonPlan, setLessonPlan] = useState("");
   const [lessonPlanLoading, setLessonPlanLoading] = useState(false);
 
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [snackPack, setSnackPack] = useState({
     success: { open: false, message: '' },
     error: { open: false, message: '' }
@@ -66,7 +68,7 @@ export default function Home() {
   const handleAudioSubmit = async () => {
     setAudioLoading(true);
     try {
-      const response = await fetch('http://localhost:3333/create-audio', {
+      const response = await fetch(`${apiUrl}/create-audio`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +94,7 @@ export default function Home() {
   const handleSlideSubmit = async () => {
     setSlideLoading(true);
     try {
-      const response = await fetch('http://localhost:3333/create-slide', {
+      const response = await fetch(`${apiUrl}/create-presentation`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +120,7 @@ export default function Home() {
   const handleQuizSubmit = async () => {
     setQuizLoading(true);
     try {
-      const response = await fetch('http://localhost:3333/generate-quiz', {
+      const response = await fetch(`${apiUrl}/generate-quiz`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -147,7 +149,7 @@ export default function Home() {
   const handleLessonPlanSubmit = async () => {
     setLessonPlanLoading(true);
     try {
-      const response = await fetch('http://localhost:3333/generate-lesson-plan', {
+      const response = await fetch(`${apiUrl}/generate-lesson-plan`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -192,21 +194,25 @@ export default function Home() {
           />
           {quiz && !quizLoading && (
             <div style={{ padding: '16px' }}>
-              <Typography variant="h6">Quiz</Typography>
-              <List>
-                {quiz.map((q, index) => (
-                  <div key={index}>
-                    <Typography variant="subtitle1">{q.question}</Typography>
-                    <List>
-                      {q.options.map((option, i) => (
-                        <ListItem key={i}>
-                          <ListItemText primary={option} />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </div>
-                ))}
-              </List>
+              <Grid container spacing={2}> 
+                  {quiz.map((q, index) => (                  
+                    <Grid item xs={12} md={6} key={index}>
+                      <Typography variant="subtitle1">{q.question}</Typography>
+                      <List>
+                        {q.options.map((option, i) => (
+                          <ListItem key={i}> 
+                            <ListItemText 
+                              primary={option} 
+                              primaryTypographyProps={{ 
+                                style: { fontWeight: q.answer === option ? 'bold' : 'normal' } 
+                              }} 
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Grid>
+                  ))}
+              </Grid>
             </div>
           )}
         </AccordionItem>

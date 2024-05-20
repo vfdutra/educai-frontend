@@ -14,7 +14,7 @@ const QuizForm = ({
 }) => {
   return (
     <FormContainer container spacing={2}>
-      <StyledTextField
+        <StyledTextField
         label="Tema"
         value={quizPrompt}
         onChange={(e) => onQuizPromptChange(e.target.value)}        

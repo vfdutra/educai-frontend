@@ -6,6 +6,7 @@ export const FormContainer = styled(Grid)`
 `;
 
 export const StyledTextField = styled(TextField)`
+  padding: 10px;
   margin-bottom: 16px;
 `;
 
