@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Typography, List, ListItem, ListItemText, Button, Grid } from '@mui/material';
+import { Container, Typography, List, ListItem, ListItemText, Grid } from '@mui/material';
 import AccordionItem from '../../components/AccordionItem';
 import SnackbarAlert from '../../components/SnackbarAlert/SnackbarAlert';
 import LessonPlanDisplay from '../../components/LessonPlanDisplay/LessonPlanDisplay';
@@ -149,7 +149,7 @@ export default function Home() {
   const handleLessonPlanSubmit = async () => {
     setLessonPlanLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/generate-lesson-plan`, {
+      const response = await fetch(`${apiUrl}/generate-class-plan`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -230,15 +230,7 @@ export default function Home() {
             onSubmit={handleSlideSubmit}
             loading={slideLoading}
             file={slideFile}
-          />
-          {slideFile && !slideLoading && (
-            <div style={{ padding: '16px' }}>
-              <Typography variant="h6">Slide</Typography>
-              <Button variant="contained" color="secondary" href={slideFile} download>
-                Baixar Slide
-              </Button>
-            </div>
-          )}
+          />         
         </AccordionItem>
 
         <AccordionItem
@@ -254,15 +246,7 @@ export default function Home() {
             onSubmit={handleAudioSubmit}
             loading={audioLoading}
             file={audioFile}
-          />
-          {audioFile && !audioLoading && (
-            <div style={{ padding: '16px' }}>
-              <Typography variant="h6">Áudio</Typography>
-              <Button variant="contained" color="secondary" href={audioFile} download>
-                Baixar Áudio
-              </Button>
-            </div>
-          )}
+          />          
         </AccordionItem>
 
         <AccordionItem
@@ -277,11 +261,10 @@ export default function Home() {
             onLessonPlanPromptChange={setLessonPlanPrompt}
             onSubmit={handleLessonPlanSubmit}
             loading={lessonPlanLoading}
-            file={lessonPlan ? URL.createObjectURL(new Blob([JSON.stringify(lessonPlan)], { type: 'application/json' })) : null}
+            file={lessonPlan ? null : null}
           />
           {lessonPlan && !lessonPlanLoading && (
             <div style={{ padding: '16px' }}>
-              <Typography variant="h6">Plano de Aula</Typography>
               <LessonPlanDisplay lessonPlan={lessonPlan} />
             </div>
           )}
