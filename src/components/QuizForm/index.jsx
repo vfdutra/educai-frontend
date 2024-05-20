@@ -37,16 +37,10 @@ const QuizForm = ({
         fullWidth
         margin="normal"
       />
-      <ButtonContainer>
-        {file ? (
-          <StyledButton variant="contained" color="secondary" href={file} download>
-            Baixar Quiz
-          </StyledButton>
-        ) : (
-          <StyledButton variant="contained" color="primary" onClick={onSubmit} disabled={loading} style={{marginTop: '20px'}}>
-            {loading ? 'Gerando...' : 'Gerar Quiz'}
-          </StyledButton>
-        )}
+      <ButtonContainer>        
+        <StyledButton variant="contained" color="primary" onClick={onSubmit} disabled={loading} style={{marginTop: '20px'}}>
+          {loading ? 'Gerando...' : 'Gerar Quiz'}
+        </StyledButton>        
       </ButtonContainer>
     </FormContainer>
   );
